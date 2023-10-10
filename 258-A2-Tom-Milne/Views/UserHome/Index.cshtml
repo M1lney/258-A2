@@ -1,0 +1,41 @@
+﻿@model UserHomeViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row">
+    <!-- Left Sidebar: User's Projects -->
+    <div class="col-md-3">
+        <h3>User's Projects</h3>
+        <ul>
+            @foreach (var project in Model.Projects)
+            {
+                <li>@project.Title</li>
+            }
+        </ul>
+        <button class="btn btn-primary">Create New Project</button>
+    </div>
+
+    <!-- Center: Calendar (Placeholder) -->
+    <div class="col-md-6">
+        <!-- Calendar goes here -->
+        <div id="calendar-placeholder">
+            <p>This is where the calendar will be displayed.</p>
+        </div>
+    </div>
+
+    <!-- Right Sidebar: User's Project Tasks -->
+    <div class="col-md-3">
+        <h3>User's Project Tasks</h3>
+        <ul>
+            @foreach (var task in Model.ProjectTasks)
+            {
+                <li>@task.Title</li>
+            }
+        </ul>
+    </div>
+</div>
+
+

@@ -115,7 +115,7 @@ namespace _258_A2_Tom_Milne.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction("Index", "UserHome");
                 }
                 if (result.RequiresTwoFactor)
                 {
