@@ -1,4 +1,9 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Data;
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<A2DbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("A2DbContext") ?? throw new InvalidOperationException("Connection string 'A2DbContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
