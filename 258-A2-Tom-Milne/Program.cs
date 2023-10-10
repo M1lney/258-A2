@@ -1,9 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Data;
+using Microsoft.AspNetCore.Identity;
+using _258_A2_Tom_Milne.Areas.Identity.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<A2DbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("A2DbContext") ?? throw new InvalidOperationException("Connection string 'A2DbContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<A2DbContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -23,6 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
