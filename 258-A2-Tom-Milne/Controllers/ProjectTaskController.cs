@@ -17,6 +17,8 @@ namespace _258_A2_Tom_Milne.Controllers
         public ProjectTaskController(A2DbContext context)
         {
             _context = context;
+            
+
         }
 
         // GET: ProjectTask

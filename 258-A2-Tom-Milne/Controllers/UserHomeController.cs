@@ -1,5 +1,6 @@
 ﻿// UserHomeController.cs
 using _258_A2_Tom_Milne.Areas.Identity.Data;
+using _258_A2_Tom_Milne.Models;
 using Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +37,9 @@ public class UserHomeController : Controller
 
         return View(viewModel);
     }
+
+   
+
 }
 
 

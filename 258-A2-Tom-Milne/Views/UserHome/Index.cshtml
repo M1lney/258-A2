@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_LayoutUser";
 }
 
 
@@ -15,7 +16,7 @@
                 <li>@project.Title</li>
             }
         </ul>
-        <button class="btn btn-primary">Create New Project</button>
+        <a asp-action="Create" asp-controller="Project" class="btn btn-primary">Create New Project</a>
     </div>
 
     <!-- Center: Calendar (Placeholder) -->
@@ -38,4 +39,13 @@
     </div>
 </div>
 
+<script>$(document).ready(function () {
+        // Initially, hide the form
+        $('#create-project-form').hide();
+
+        // Add click event to toggle form visibility
+        $('#create-project-button').click(function () {
+            $('#create-project-form').toggle();
+        });
+    });</script>
 

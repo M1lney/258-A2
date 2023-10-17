@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using _258_A2_Tom_Milne.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace _258_A2_Tom_Milne.Controllers
 {
     public class ProjectController : Controller
     {
         private readonly A2DbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ProjectController(A2DbContext context)
+
+        public ProjectController(UserManager<IdentityUser> userManager, A2DbContext context)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Project
@@ -54,17 +59,33 @@ namespace _258_A2_Tom_Milne.Controllers
         // POST: Project/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Date,UserId")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Date")] Project project)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                project.UserId = user.Id;
+
+
                 _context.Add(project);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "UserHome");
+
             }
-            return View(project);
+            else
+            {
+                foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        Console.WriteLine(error.ErrorMessage);
+                    }
+                }
+                return View(project);
+            }
         }
 
         // GET: Project/Edit/5
