@@ -20,3 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%; /* Ensure the footer spans the full width */
+    background-color: #f8f9fa; /* Add a background color if needed */
+    border-top: 1px solid #ccc; /* Add a border if needed */
+    padding: 15px; /* Adjust the padding as per your design */
+    text-align: center; /* Center-align the content in the footer */
+}

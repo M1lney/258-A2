@@ -25,11 +25,20 @@ namespace _258_A2_Tom_Milne.Controllers
         }
 
         // GET: Project
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-              return _context.Project != null ? 
-                          View(await _context.Project.ToListAsync()) :
-                          Problem("Entity set 'A2DbContext.Project'  is null.");
+            var user = await _userManager.GetUserAsync(User);
+
+            // Get the UserId of the logged-in user
+            var userId = user.Id;
+
+            // Filter the projects by UserId
+            var userProjects = await _context.Project
+                .Where(p => p.UserId == userId)
+                .ToListAsync();
+
+            return View(userProjects);
         }
 
         // GET: Project/Details/5
@@ -62,7 +71,7 @@ namespace _258_A2_Tom_Milne.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Date")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Date,UserId")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +81,10 @@ namespace _258_A2_Tom_Milne.Controllers
 
                 _context.Add(project);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "UserHome");
+
+                int projectId = project.Id;
+
+                return RedirectToAction("Details", "Project", new { projectId });
 
             }
             else

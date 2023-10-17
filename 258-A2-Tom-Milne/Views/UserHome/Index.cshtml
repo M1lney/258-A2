@@ -5,47 +5,50 @@
     Layout = "_LayoutUser";
 }
 
+<div class="container-fluid">
+    <div class="row">
 
-<div class="row">
-    <!-- Left Sidebar: User's Projects -->
-    <div class="col-md-3">
-        <h3>User's Projects</h3>
-        <ul>
-            @foreach (var project in Model.Projects)
-            {
-                <li>@project.Title</li>
-            }
-        </ul>
-        <a asp-action="Create" asp-controller="Project" class="btn btn-primary">Create New Project</a>
-    </div>
+        <div class="col-md-4">
+            <h3>User's Projects</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Finish Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var project in Model.Projects)
+                    {
+                        <tr>
+                            <td>@project.Title</td>
+                            <td>@project.Description</td>
+                            <td>@project.Date</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Create" asp-controller="Project" class="btn btn-primary">Create New Project</a>
+        </div>
 
-    <!-- Center: Calendar (Placeholder) -->
-    <div class="col-md-6">
-        <!-- Calendar goes here -->
-        <div id="calendar-placeholder">
-            <p>This is where the calendar will be displayed.</p>
+        <!-- Center: Calendar (Placeholder) -->
+        <div class="col-md-6">
+            <!-- Calendar goes here -->
+            <div id="calendar-placeholder">
+                <p>This is where the calendar will be displayed.</p>
+            </div>
+        </div>
+
+        <!-- Right Sidebar: User's Project Tasks -->
+        <div class="col-md-2">
+            <h3>User's Project Tasks</h3>
+            <ul>
+                @foreach (var task in Model.ProjectTasks)
+                {
+                    <li>@task.Title</li>
+                }
+            </ul>
         </div>
     </div>
-
-    <!-- Right Sidebar: User's Project Tasks -->
-    <div class="col-md-3">
-        <h3>User's Project Tasks</h3>
-        <ul>
-            @foreach (var task in Model.ProjectTasks)
-            {
-                <li>@task.Title</li>
-            }
-        </ul>
-    </div>
 </div>
-
-<script>$(document).ready(function () {
-        // Initially, hide the form
-        $('#create-project-form').hide();
-
-        // Add click event to toggle form visibility
-        $('#create-project-button').click(function () {
-            $('#create-project-form').toggle();
-        });
-    });</script>
-

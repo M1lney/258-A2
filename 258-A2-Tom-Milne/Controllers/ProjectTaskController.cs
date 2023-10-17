@@ -48,9 +48,14 @@ namespace _258_A2_Tom_Milne.Controllers
         }
 
         // GET: ProjectTask/Create
-        public IActionResult Create()
+        public IActionResult Create(int projectId)
         {
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id");
+            var projectTask = new ProjectTask
+            {
+                ProjectId = projectId
+            };
+
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Title", projectTask.ProjectId);
             return View();
         }
 
@@ -67,7 +72,7 @@ namespace _258_A2_Tom_Milne.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", projectTask.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Title", projectTask.ProjectId);
             return View(projectTask);
         }
 
