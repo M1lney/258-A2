@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<A2DbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("A2DbContext") ?? throw new InvalidOperationException("Connection string 'A2DbContext' not found.")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<A2DbContext>();
 
 
