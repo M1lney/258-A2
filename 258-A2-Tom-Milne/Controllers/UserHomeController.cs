@@ -10,13 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 public class UserHomeController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly ApplicationDbContext _identityDbContext;
     private readonly A2DbContext _a2DbContext;
 
-    public UserHomeController(UserManager<IdentityUser> userManager, ApplicationDbContext identityDbContext, A2DbContext a2DbContext)
+    public UserHomeController(UserManager<IdentityUser> userManager,  A2DbContext a2DbContext)
     {
         _userManager = userManager;
-        _identityDbContext = identityDbContext;
         _a2DbContext = a2DbContext;
     }
 
