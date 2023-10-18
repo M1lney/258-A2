@@ -7,17 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using _258_A2_Tom_Milne.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis;
 
 namespace _258_A2_Tom_Milne.Controllers
 {
     public class ProjectTaskController : Controller
     {
         private readonly A2DbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ProjectTaskController(A2DbContext context)
+
+        public ProjectTaskController(UserManager<IdentityUser> userManager, A2DbContext context)
         {
             _context = context;
-            
+            _userManager = userManager;
+
 
         }
 
@@ -48,14 +53,9 @@ namespace _258_A2_Tom_Milne.Controllers
         }
 
         // GET: ProjectTask/Create
-        public IActionResult Create(int projectId)
+        public IActionResult Create()
         {
-            var projectTask = new ProjectTask
-            {
-                ProjectId = projectId
-            };
-
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Title", projectTask.ProjectId);
+            
             return View();
         }
 
@@ -64,15 +64,44 @@ namespace _258_A2_Tom_Milne.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Date,ProjectId")] ProjectTask projectTask)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Date,ProjectId")] ProjectTask projectTask, int projectId)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(projectTask);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var user = await _userManager.GetUserAsync(User);
+
+
+                if (user != null)
+                {
+
+                    
+                    projectTask.UserId = user.Id;
+                    projectTask.ProjectId = projectId;
+
+
+                    // Set the ProjectId of the ProjectTask to match the retrieved Project's Id
+
+
+                    _context.Add(projectTask);
+
+                    // Save changes
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("ProjectDetails", "UserHome", new { projectId });
+                    
+                }
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Title", projectTask.ProjectId);
+            else
+            {
+                foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        Console.WriteLine(error.ErrorMessage);
+                    }
+                }
+            }
+
             return View(projectTask);
         }
 

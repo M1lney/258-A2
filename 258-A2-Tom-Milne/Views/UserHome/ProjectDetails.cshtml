@@ -1,0 +1,35 @@
+﻿@model _258_A2_Tom_Milne.Models.ProjectViewModel
+
+@{
+    ViewData["Title"] = "Project Details";
+    Layout = "_LayoutUser";
+    var projectId = Model.ProjectId;
+
+}
+
+<h1>@Model.Project.Title</h1>
+<p>@Model.Project.Description</p>
+<p>Finish Date: @Model.Project.Date.ToShortDateString()</p>
+
+<h2>Project Tasks</h2>
+<ul>
+    @foreach (var task in Model.ProjectTasks)
+    {
+        <li>@task.Title</li>
+        <li>@task.Description</li>
+        <li>@task.Date</li>
+    }
+</ul>
+
+<button id="toggleForm" class="btn btn-primary">Add Project Task</button>
+
+@Html.Partial("_CreateTaskForm", new _258_A2_Tom_Milne.Models.ProjectTask { ProjectId = projectId })
+
+<script>document.getElementById("toggleForm").addEventListener("click", function () {
+        const form = document.getElementById("projectTaskForm");
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    });</script>

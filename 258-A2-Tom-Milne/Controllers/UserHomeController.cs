@@ -5,6 +5,7 @@ using Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 [Authorize]
@@ -38,7 +39,23 @@ public class UserHomeController : Controller
         return View(viewModel);
     }
 
-   
+    public IActionResult ProjectDetails(int projectId)
+    {
+        var project = _a2DbContext.Project.Include(p => p.ProjectTasks).SingleOrDefault(p => p.Id == projectId);
+        if (project == null)
+        {
+            return NotFound();
+        }
+
+        var viewModel = new ProjectViewModel
+        {
+            ProjectId = project.Id,
+            Project = project,
+            ProjectTasks = project.ProjectTasks.ToList()
+        };
+
+        return View(viewModel);
+    }
 
 }
 

@@ -5,7 +5,7 @@
 namespace _258_A2_Tom_Milne.Migrations
 {
     /// <inheritdoc />
-    public partial class cleareduserdata : Migration
+    public partial class initisalcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

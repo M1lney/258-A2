@@ -78,13 +78,12 @@ namespace _258_A2_Tom_Milne.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 project.UserId = user.Id;
 
-
+                
                 _context.Add(project);
                 await _context.SaveChangesAsync();
-
                 int projectId = project.Id;
 
-                return RedirectToAction("Details", "Project", new { projectId });
+                return RedirectToAction("ProjectDetails", "UserHome", new { projectId });
 
             }
             else
