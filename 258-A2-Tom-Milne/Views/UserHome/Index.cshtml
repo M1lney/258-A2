@@ -22,9 +22,11 @@
                     @foreach (var project in Model.Projects)
                     {
                         <tr>
-                            <td>@project.Title</td>
+                            <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@project.Id">@project.Title</a></td>
                             <td>@project.Description</td>
                             <td>@project.Date</td>
+                            <td>@project.Id</td>
+
                         </tr>
                     }
                 </tbody>
