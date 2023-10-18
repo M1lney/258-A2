@@ -25,9 +25,9 @@ public class UserHomeController : Controller
         // Get the current user
         var user = await _userManager.GetUserAsync(User);
 
-        // Fetch user-specific data related to projects and ProjectTasks
-        var userProjects = _a2DbContext.Project.Where(p => p.UserId == user.Id).ToList();
-        var userProjectTasks = _a2DbContext.ProjectTask.Where(pt => pt.UserId == user.Id).ToList();
+        // Fetch user-specific data related to projects and ProjectTasks, use linq to order by date 
+        var userProjects = _a2DbContext.Project.Where(p => p.UserId == user.Id).OrderBy(p => p.Date).ToList();
+        var userProjectTasks = _a2DbContext.ProjectTask.Where(pt => pt.UserId == user.Id).OrderBy(pt => pt.Date).ToList();
 
         // Create a ViewModel to pass data to the view
         var viewModel = new UserHomeViewModel
@@ -57,7 +57,7 @@ public class UserHomeController : Controller
         return View(viewModel);
     }
 
-    public IActionResult Search(string searchTerm)
+    public IActionResult Search(string searchTerm, string selectedFilter)
     {
         
 
@@ -68,6 +68,7 @@ public class UserHomeController : Controller
         var viewModel = new SearchViewModel
         {
             SearchTerm = searchTerm,
+            filterTerm = selectedFilter,
             Projects = matchingProjects,
             Tasks = matchingTasks
         };

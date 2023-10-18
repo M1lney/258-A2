@@ -1,50 +1,61 @@
 ﻿@model SearchViewModel
+@{
+    ViewData["Title"] = "Search Results";
+    Layout = "_LayoutUser";
+
+}
 
 <h1>Search Results for "@Model.SearchTerm"</h1>
 
-<h2>Projects</h2>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Finish Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var project in Model.Projects)
-        {
+@if (Model.filterTerm == "Projects" || Model.filterTerm == "All")
+{
+    <h2>Projects</h2>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@project.Id">@project.Title</a></td>
-                <td>@project.Description</td>
-                <td>@project.Date</td>
-                <td>@project.Id</td>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Finish Date</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var project in Model.Projects)
+            {
+                <tr>
+                    <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@project.Id">@project.Title</a></td>
+                    <td>@project.Description</td>
+                    <td>@project.Date</td>
+                    <td>@project.Id</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-<h2>Tasks</h2>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Finish Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var task in Model.Tasks)
-        {
+@if (Model.filterTerm == "Project Tasks" || Model.filterTerm == "All")
+{
+    <h2>Tasks</h2>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@task.Id">@task.Title</a></td>
-                <td>@task.Description</td>
-                <td>@task.Date</td>
-                <td>@task.Id</td>
-
+                <th>Title</th>
+                <th>Description</th>
+                <th>Finish Date</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var task in Model.Tasks)
+            {
+                <tr>
+                    <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@task.Id">@task.Title</a></td>
+                    <td>@task.Description</td>
+                    <td>@task.Date</td>
+                    <td>@task.Id</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 
