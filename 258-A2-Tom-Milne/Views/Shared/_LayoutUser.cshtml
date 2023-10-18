@@ -26,18 +26,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
                         </li>
                     </ul>
-                    <form asp-controller="UserHome" asp-action="Search" method="get">
-                        <div class="input-group">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="Search..." />
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
+                    <form asp-controller="UserHome" asp-action="Search" method="get" class="form-inline">
                         <div class="form-group">
-                            <label for="selectedFilter">Filter by:</label>
-                            <select class="form-control" id="selectedFilter" name="selectedFilter">
-                                <option value="All">All</option>
-                                <option value="Projects">Projects</option>
-                                <option value="Project Tasks">Project Tasks</option>
-                            </select>
+                            <div class="input-group">
+                                <input type="text" name="searchTerm" class="form-control" placeholder="Search..." />
+                                <button type="submit" class="btn btn-primary">Search</button>
+                                <div class="input-group-addon" style="margin-left:5px">
+                                    <select class="form-control" id="selectedFilter" name="selectedFilter">
+                                        <option value="All">Filter by: All</option>
+                                        <option value="Projects">Filter by: Projects</option>
+                                        <option value="Project Tasks">Filter by: Project Tasks</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
