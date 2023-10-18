@@ -57,6 +57,24 @@ public class UserHomeController : Controller
         return View(viewModel);
     }
 
+    public IActionResult Search(string searchTerm)
+    {
+        
+
+        var matchingProjects = _a2DbContext.Project.Where(p => p.Title.Contains(searchTerm)).ToList();
+        var matchingTasks = _a2DbContext.ProjectTask.Where(pt => pt.Title.Contains(searchTerm)).ToList();
+
+        // Create a view model to display the search results
+        var viewModel = new SearchViewModel
+        {
+            SearchTerm = searchTerm,
+            Projects = matchingProjects,
+            Tasks = matchingTasks
+        };
+
+        return View("SearchResult", viewModel);
+    }
+
 }
 
 

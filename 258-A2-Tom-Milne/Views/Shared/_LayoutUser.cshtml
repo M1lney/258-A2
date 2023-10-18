@@ -25,9 +25,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
                         </li>
-
-
                     </ul>
+                    <form asp-controller="UserHome" asp-action="Search" method="get">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Search..." />
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </nav>
