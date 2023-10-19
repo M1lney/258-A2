@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Data;
 using Microsoft.AspNetCore.Identity;
 using _258_A2_Tom_Milne.Areas.Identity.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<A2DbContext>(options =>
@@ -11,6 +12,11 @@ builder.Services.AddDbContext<A2DbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<A2DbContext>();
 
+builder.Services.AddControllers()
+           .AddJsonOptions(options =>
+           {
+               options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+           });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

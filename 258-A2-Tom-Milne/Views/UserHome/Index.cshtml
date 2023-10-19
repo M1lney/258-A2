@@ -4,17 +4,16 @@
     ViewData["Title"] = "Index";
     Layout = "_LayoutUser";
 }
-
-<div class="container-fluid">
-    <div class="row">
-
-        <div class="col-md-4">
-            <h3>User's Projects</h3>
+<head>
+    <link rel="stylesheet" href="~/css/UserHomeStyle.css" asp-append-version="true" />
+</head>
+<div class="userhome-container">
+        <div class="left-sidebar">
+            <h4 id="project-header">Projects</h4>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Finish Date</th>
                     </tr>
                 </thead>
@@ -23,10 +22,9 @@
                     {
                         <tr>
                             <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@project.Id">@project.Title</a></td>
-                            <td>@project.Description</td>
+                
                             <td>@project.Date</td>
-                            <td>@project.Id</td>
-
+                            <td><a asp-action="Delete" asp-controller="Project" asp-route-id="@project.Id">Delete</a></td>
                         </tr>
                     }
                 </tbody>
@@ -35,22 +33,42 @@
         </div>
 
         <!-- Center: Calendar (Placeholder) -->
-        <div class="col-md-6">
-            <!-- Calendar goes here -->
-            <div id="calendar-placeholder">
-                <p>This is where the calendar will be displayed.</p>
-            </div>
+        <div class="middle-section">
+            <div id="calendar"></div>
         </div>
 
-        <!-- Right Sidebar: User's Project Tasks -->
-        <div class="col-md-2">
-            <h3>User's Project Tasks</h3>
-            <ul>
-                @foreach (var task in Model.ProjectTasks)
-                {
-                    <li>@task.Title</li>
-                }
-            </ul>
-        </div>
-    </div>
+        
 </div>
+<script>
+    function initializeCalendar() {
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var events = [];
+
+            @foreach (var project in Model.Projects)
+            {
+                @:events.push({
+                @:    title: '@project.Title',
+                @:    start: '@project.Date.ToString("yyyy-MM-dd")',
+                @:    url: '@Url.Action("ProjectDetails", "UserHome")/' + @project.Id
+                @:});
+            }
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: events,
+                eventClick: function (info) {
+                    window.location = info.event.url;
+                }
+            });
+
+            calendar.render();
+        });
+    }
+</script>
+<script>
+    initializeCalendar();
+</script>
+
+
+

@@ -75,7 +75,7 @@ public class UserHomeController : Controller
 
         return View("SearchResult", viewModel);
     }
-
+    
 }
 
 

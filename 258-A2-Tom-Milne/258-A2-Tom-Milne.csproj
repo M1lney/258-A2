@@ -20,6 +20,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.12" />
+    <PackageReference Include="jQuery.Fullcalendar" Version="3.9.0" />
+    <PackageReference Include="jQuery" Version="3.7.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\UserHome\" />
