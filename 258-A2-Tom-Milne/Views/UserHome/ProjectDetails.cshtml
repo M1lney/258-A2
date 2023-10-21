@@ -22,11 +22,10 @@
 
         <label for="projectDate_@Model.Project.Id">Finish Date:</label>
         <input type="date" class="form-control editable-field" id="projectDate_@Model.Project.Id" readonly="readonly" value="@Model.Project.Date.ToString("yyyy-MM-dd")" />
-        <button class="btn btn-primary" id="editButton">Edit</button>
-        <button id="toggleForm" class="btn btn-primary">Add Project Task</button>
+        <a asp-action="Edit" asp-controller="Project" asp-route-id="@Model.Project.Id">Edit</a><button id="toggleForm" class="btn btn-primary">Add Project Task</button>
 
         <!--Use razor syntax to return and display a partial view responsible for creating new tasks and adding them within the projects.
-            This approach allows the form to be displayed within the page-->
+    This approach allows the form to be displayed within the page-->
         @Html.Partial("_CreateTaskForm", new _258_A2_Tom_Milne.Models.ProjectTask { ProjectId = projectId })
 
     </div>
@@ -54,6 +53,7 @@
                             <h6>Description:</h6>
                             <textarea class="form-control editable-field" id="taskDescription_@task.Id" readonly="readonly">@task.Description</textarea>
                         </div>
+                        <a asp-action="Edit" asp-controller="ProjectTask" asp-route-id="@task.Id">Edit</a>
 
                     </div>
                 </div>
