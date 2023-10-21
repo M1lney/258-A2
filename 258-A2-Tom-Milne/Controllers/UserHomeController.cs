@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 //Custom controller for handling actions related to the user home page. I used UserManager class from Identity to
 //handle tracking logged in user. I then used this to populate a view model with projects associated with that user
+//All actions only available to authenticated user
 [Authorize]
 public class UserHomeController : Controller
 {

@@ -24,7 +24,8 @@ namespace _258_A2_Tom_Milne.Controllers
             _userManager = userManager;
         }
 
-        // GET: Project
+        //Modified index action which passes list of projects to be displayed based on the logged in user
+        //Authorize annotation as only authenticated user can access projects
         [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -68,6 +69,7 @@ namespace _258_A2_Tom_Milne.Controllers
         // POST: Project/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //modified to associate projects with a user.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -83,9 +85,10 @@ namespace _258_A2_Tom_Milne.Controllers
                 await _context.SaveChangesAsync();
                 int projectId = project.Id;
 
-                return RedirectToAction("ProjectDetails", "UserHome", new { projectId });
+                return RedirectToAction("ProjectDetails", "UserHome", new { projectId });//upon creation redirect to project details action
 
             }
+            //debug code
             else
             {
                 foreach (var modelState in ViewData.ModelState.Values)

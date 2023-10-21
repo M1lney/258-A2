@@ -62,6 +62,7 @@ namespace _258_A2_Tom_Milne.Controllers
         // POST: ProjectTask/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Modified to display project tasksbased on a passed projectId
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,Date,ProjectId")] ProjectTask projectTask, int projectId)
@@ -87,10 +88,11 @@ namespace _258_A2_Tom_Milne.Controllers
                     // Save changes
                     await _context.SaveChangesAsync();
 
-                    return RedirectToAction("ProjectDetails", "UserHome", new { projectId });
+                    return RedirectToAction("ProjectDetails", "UserHome", new { projectId });//redirects to the same Projectdetails page it is called from
                     
                 }
             }
+            //debug code
             else
             {
                 foreach (var modelState in ViewData.ModelState.Values)
