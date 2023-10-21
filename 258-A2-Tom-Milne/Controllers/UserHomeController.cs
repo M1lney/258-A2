@@ -1,5 +1,4 @@
-﻿// UserHomeController.cs
-using _258_A2_Tom_Milne.Areas.Identity.Data;
+﻿using _258_A2_Tom_Milne.Areas.Identity.Data;
 using _258_A2_Tom_Milne.Models;
 using Data;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
+//Custom controller for handling actions related to the user home page. I used UserManager class from Identity to
+//handle tracking logged in user. I then used this to populate a view model with projects associated with that user
 [Authorize]
 public class UserHomeController : Controller
 {
@@ -20,12 +20,13 @@ public class UserHomeController : Controller
         _a2DbContext = a2DbContext;
     }
 
+    //use UserManager to get lists of Projects and projecttasks with a userId matching the user
     public async Task<IActionResult> Index()
     {
         // Get the current user
         var user = await _userManager.GetUserAsync(User);
 
-        // Fetch user-specific data related to projects and ProjectTasks, use linq to order by date 
+        // Fetch user-specific data related to projects and ProjectTasks based on the id of logged in user, use linq to order by date 
         var userProjects = _a2DbContext.Project.Where(p => p.UserId == user.Id).OrderBy(p => p.Date).ToList();
         var userProjectTasks = _a2DbContext.ProjectTask.Where(pt => pt.UserId == user.Id).OrderBy(pt => pt.Date).ToList();
 
@@ -39,6 +40,7 @@ public class UserHomeController : Controller
         return View(viewModel);
     }
 
+    //works in a similar way but takes a projectId variable to store a list of Project tasks with matching projectId
     public IActionResult ProjectDetails(int projectId)
     {
         var project = _a2DbContext.Project.Include(p => p.ProjectTasks).SingleOrDefault(p => p.Id == projectId);
@@ -46,7 +48,7 @@ public class UserHomeController : Controller
         {
             return NotFound();
         }
-
+        //create model using data from the project with the passed Id
         var viewModel = new ProjectViewModel
         {
             ProjectId = project.Id,
@@ -57,6 +59,7 @@ public class UserHomeController : Controller
         return View(viewModel);
     }
 
+    //Create a new SearchView model based on the searchTerm and SelectedFilter 
     public IActionResult Search(string searchTerm, string selectedFilter)
     {
         

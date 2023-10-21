@@ -1,11 +1,13 @@
-﻿<!DOCTYPE html>
+﻿<!--A second Layout to be used once the user has logged in to their account-->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - _258_A2_Tom_Milne</title>
-
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--FullCalendar js used for the calendar-->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
     <link href='fullcalendar/core/main.css' rel='stylesheet' />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -29,10 +31,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
                         </li>
+                        <!--Nav link to the Identity framework page for account management. I made small modifications to the page
+                            by adding a link to the loggout action and removing some elements-->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a>
                         </li>
                     </ul>
+                    <!--Search bar with a select for filtering-->
                     <form asp-controller="UserHome" asp-action="Search" method="get" class="form-inline">
                         <div class="form-group">
                             <div class="input-group">

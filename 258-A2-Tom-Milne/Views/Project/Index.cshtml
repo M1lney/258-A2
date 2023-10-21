@@ -29,16 +29,16 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <!--small modification to the index page to link the project title to the UserHome/ProjectDetails page-->
             <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@item.Id">@item.Title</a></td>
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-
+            <!--Removed edit and details links as these are handled by the ProjectDetails page-->
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
