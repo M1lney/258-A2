@@ -50,7 +50,7 @@
                 @:events.push({
                 @:    title: '@project.Title',
                 @:    start: '@project.Date.ToString("yyyy-MM-dd")',
-                @:    url: '@Url.Action("ProjectDetails", "UserHome")/' + @project.Id
+                @:    url: '@Url.Action("ProjectDetails", "UserHome", new { projectId = @project.Id })'
                 @:});
             }
 
