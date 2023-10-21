@@ -12,6 +12,10 @@
     width: 40%;
    
 }
+.scrollable-container {
+    max-height: 600px;
+    overflow-y: auto;
+}
 .middle-section {
     width: 60%;
     padding-left:20px;

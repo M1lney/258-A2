@@ -8,41 +8,56 @@
 }
 
 <head>
-    <link rel="stylesheet" href="~/css/ProjectDetailsStyle.css" />
+    <link rel="stylesheet" href="~/css/UserHomeStyle.css" />
 </head>
 
-<input class="form-control editable-field" id="projectTitle_@Model.Project.Id" readonly="readonly" value="@Model.Project.Title" />
-<p>@Model.Project.Description</p>
-<input type="date" class="form-control editable-field" id="projectDate_@Model.Project.Id" readonly="readonly" value="@Model.Project.Date.ToString("yyyy-MM-dd")" />
+<div class="userhome-container">
+    <div class="left-sidebar">
+        <label for="projectTitle_@Model.Project.Id">Project Title</label>
+        <input class="form-control editable-field" id="projectTitle_@Model.Project.Id" readonly="readonly" value="@Model.Project.Title" />
 
-<h5>Project Tasks</h5>
-<div>
-    @foreach (var task in Model.ProjectTasks)
-    {
-        <div class="card" style="margin-bottom: 10px">
-            <div class="card-body">
-                <div class="row" style="border-bottom: 1px solid #ccc;">
-                    <div class="col-md-6">
-                        <input class="form-control editable-field" id="taskTitle_@task.Id" readonly="readonly" value="@task.Title" />
-                    </div>
-                    <div class="col-md-6">
-                        <input type="date" class="form-control editable-field" id="taskDate_@task.Id" readonly="readonly" value="@task.Date.ToString("yyyy-MM-dd")" />
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <h6>Description:</h6>
-                    <textarea class="form-control editable-field" id="taskDescription_@task.Id" readonly="readonly">@task.Description</textarea>
-                    <button class="btn btn-primary" id="editButton" task-id="@task.Id">Edit</button>
-                </div>
+        <label for="projectDescription_@Model.Project.Id">Project Description</label>
+        <input type="date" class="form-control editable-field" id="projectDescription_@Model.Project.Id" readonly="readonly" value="@Model.Project.Description" />
 
+        <label for="projectDate_@Model.Project.Id">Finish Date:</label>
+        <input type="date" class="form-control editable-field" id="projectDate_@Model.Project.Id" readonly="readonly" value="@Model.Project.Date.ToString("yyyy-MM-dd")" />
+        <button class="btn btn-primary" id="editButton">Edit</button>
+        <button id="toggleForm" class="btn btn-primary">Add Project Task</button>
+
+        @Html.Partial("_CreateTaskForm", new _258_A2_Tom_Milne.Models.ProjectTask { ProjectId = projectId })
+
+    </div>
+
+    
+    <div class="middle-section">
+        <h5>Project Tasks</h5>
+            <div class="scrollable-container">
+                @foreach (var task in Model.ProjectTasks)
+                {
+                    <div class="card" style="margin-bottom: 10px">
+                        <div class="card-body">
+                            <div class="row" style="border-bottom: 1px solid #ccc;">
+                                <div class="col-md-6">
+                                    <label for="taskTitle_@task.Id">Title:</label>
+                                    <input class="form-control editable-field" id="taskTitle_@task.Id" readonly="readonly" value="@task.Title" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="taskDate_@task.Id">Finish Date:</label>
+                                    <input type="date" class="form-control editable-field" id="taskDate_@task.Id" readonly="readonly" value="@task.Date.ToString("yyyy-MM-dd")" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h6>Description:</h6>
+                                <textarea class="form-control editable-field" id="taskDescription_@task.Id" readonly="readonly">@task.Description</textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
-    }
+        
+    </div>
 </div>
-
-<button id="toggleForm" class="btn btn-primary">Add Project Task</button>
-
-@Html.Partial("_CreateTaskForm", new _258_A2_Tom_Milne.Models.ProjectTask { ProjectId = projectId })
 
 <script>document.getElementById("toggleForm").addEventListener("click", function () {
         const form = document.getElementById("projectTaskForm");
@@ -51,6 +66,11 @@
         } else {
             form.style.display = "none";
         }
+    });
+
+    document.getElementById("cancelButton").addEventListener("click", function () {
+        const form = document.getElementById("projectTaskForm");
+        form.style.display = "none";
     });</script>
 
 
