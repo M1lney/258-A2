@@ -7,6 +7,9 @@
 
 <h1>Search Results for "@Model.SearchTerm"</h1>
 
+
+<!--I used a simple viewmodel for displaying search results. Conditionaly displays results based on a filter term
+    which comes from a select element in the layout-->
 @if (Model.filterTerm == "Projects" || Model.filterTerm == "All")
 {
     <h2>Projects</h2>

@@ -10,7 +10,8 @@
 <head>
     <link rel="stylesheet" href="~/css/UserHomeStyle.css" />
 </head>
-
+<!--This section displays data from the project model. Input tags are used with the readoly attribute so that the fields can be
+    toggled between being editable and non editable-->
 <div class="userhome-container">
     <div class="left-sidebar">
         <label for="projectTitle_@Model.Project.Id">Project Title</label>
@@ -24,41 +25,45 @@
         <button class="btn btn-primary" id="editButton">Edit</button>
         <button id="toggleForm" class="btn btn-primary">Add Project Task</button>
 
+        <!--Use razor syntax to return and display a partial view responsible for creating new tasks and adding them within the projects.
+            This approach allows the form to be displayed within the page-->
         @Html.Partial("_CreateTaskForm", new _258_A2_Tom_Milne.Models.ProjectTask { ProjectId = projectId })
 
     </div>
 
-    
+    <!--This section displays the tasks associated with the project. I used css to make the list of tasks scroll independantly
+        I used boostrap card class to display each task-->
     <div class="middle-section">
         <h5>Project Tasks</h5>
-            <div class="scrollable-container">
-                @foreach (var task in Model.ProjectTasks)
-                {
-                    <div class="card" style="margin-bottom: 10px">
-                        <div class="card-body">
-                            <div class="row" style="border-bottom: 1px solid #ccc;">
-                                <div class="col-md-6">
-                                    <label for="taskTitle_@task.Id">Title:</label>
-                                    <input class="form-control editable-field" id="taskTitle_@task.Id" readonly="readonly" value="@task.Title" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="taskDate_@task.Id">Finish Date:</label>
-                                    <input type="date" class="form-control editable-field" id="taskDate_@task.Id" readonly="readonly" value="@task.Date.ToString("yyyy-MM-dd")" />
-                                </div>
+        <div class="scrollable-container">
+            @foreach (var task in Model.ProjectTasks)
+            {
+                <div class="card" style="margin-bottom: 10px">
+                    <div class="card-body">
+                        <div class="row" style="border-bottom: 1px solid #ccc;">
+                            <div class="col-md-6">
+                                <label for="taskTitle_@task.Id">Title:</label>
+                                <input class="form-control editable-field" id="taskTitle_@task.Id" readonly="readonly" value="@task.Title" />
                             </div>
-                            <div class="col-md-12">
-                                <h6>Description:</h6>
-                                <textarea class="form-control editable-field" id="taskDescription_@task.Id" readonly="readonly">@task.Description</textarea>
+                            <div class="col-md-6">
+                                <label for="taskDate_@task.Id">Finish Date:</label>
+                                <input type="date" class="form-control editable-field" id="taskDate_@task.Id" readonly="readonly" value="@task.Date.ToString("yyyy-MM-dd")" />
                             </div>
-
                         </div>
+                        <div class="col-md-12">
+                            <h6>Description:</h6>
+                            <textarea class="form-control editable-field" id="taskDescription_@task.Id" readonly="readonly">@task.Description</textarea>
+                        </div>
+
                     </div>
-                }
-            </div>
-        
+                </div>
+            }
+        </div>
+
     </div>
 </div>
 
+<!--This script toggles the display of the partial view for adding tasks between no display and block display-->
 <script>document.getElementById("toggleForm").addEventListener("click", function () {
         const form = document.getElementById("projectTaskForm");
         if (form.style.display === "none" || form.style.display === "") {
@@ -73,15 +78,17 @@
         form.style.display = "none";
     });</script>
 
-
+<!--This script gets the edit button from the document and all editable elements. Then allows the user to toggle if the
+    elements can be edited-->
 <script>const editButton = document.getElementById('editButton');
     const editFields = document.querySelectorAll('.editable-field');
 
+    //toggles the readonly attribute
     function toggleEditableFields() {
         editFields.forEach(field => {
             field.readOnly = !field.readOnly;
         });
-
+        //toggles the the text content of the button and its function between setting the elements readonly and !readonly
         editButton.textContent = editFields[0].readOnly ? 'Edit Fields' : 'Save Changes';
     }
 

@@ -8,43 +8,66 @@
     <link rel="stylesheet" href="~/css/UserHomeStyle.css" asp-append-version="true" />
 </head>
 <div class="userhome-container">
-        <div class="left-sidebar">
-            <h4 id="project-header">Projects</h4>
-            <table class="table table-bordered">
-                <thead>
+    <div class="left-sidebar">
+        <h4 id="project-header">Projects</h4>
+        <!--Table to display the users projects-->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Finish Date</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                @foreach (var project in Model.Projects)
+                {
                     <tr>
-                        <th>Title</th>
-                        <th>Finish Date</th>
+                        <!--display the project title as a link which calls ProjectDetails action and passes the project id
+                            this directs to the ProjectDetails view for that project-->
+                        <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@project.Id">@project.Title</a></td>
+
+                        <td>@project.Date</td>
+                        <td><a asp-action="Delete" asp-controller="Project" asp-route-id="@project.Id">Delete</a></td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var project in Model.Projects)
-                    {
-                        <tr>
-                            <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@project.Id">@project.Title</a></td>
-                
-                            <td>@project.Date</td>
-                            <td><a asp-action="Delete" asp-controller="Project" asp-route-id="@project.Id">Delete</a></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <a asp-action="Create" asp-controller="Project" class="btn btn-primary">Create New Project</a>
-        </div>
+                }
+            </tbody>
+        </table>
+        <a asp-action="Create" asp-controller="Project" class="btn btn-primary">Create New Project</a>
+    </div>
 
-        <!-- Center: Calendar (Placeholder) -->
-        <div class="middle-section">
-            <div id="calendar"></div>
-        </div>
+    <!--This section displays a calendar with projects or project tasks based on the option value of the select-->
+    <div class="middle-section">
+        <select class="form-control" id="filter" style="margin-bottom:5px">
+            <option value="Projects">Projects</option>
+            <option value="Project Tasks">Project Tasks</option>
+        </select>
+        <div id="calendar"></div>
+    </div>
 
-        
+
 </div>
+<!-- This script uses the fullCalendar package:https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js to load and display
+    a calendar and populate it with data from my Project and ProjectTask models-->
 <script>
-    function initializeCalendar() {
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var events = [];
 
+    //function to load the calendar
+    function loadCalendar(selectedFilter) {
+        
+        var calendarEl = document.getElementById('calendar'); //get the div where the calendar will display
+        var calendar = new FullCalendar.Calendar(calendarEl, { //initialize using the Calendar method from FullCalendar, passing the div
+            initialView: 'dayGridMonth', //set view to display single month
+            eventClick: function (info) { //set event for clicking some object within the calender 
+                window.location = info.event.url;
+            }
+        });
+
+        calendar.removeAllEvents(); // Clear existing events so that we can re load calender when select is toggled
+
+        var events = []; //initialise array of calendar events 
+
+        //loops through a model based on the condition of the select value. Uses razor syntax to generate event objects and add them to array
+        if (selectedFilter == 'Projects') {
             @foreach (var project in Model.Projects)
             {
                 @:events.push({
@@ -53,22 +76,37 @@
                 @:    url: '@Url.Action("ProjectDetails", "UserHome", new { projectId = @project.Id })'
                 @:});
             }
+        }
+        if (selectedFilter == 'Project Tasks') {
+            @foreach (var projectTask in Model.ProjectTasks)
+            {
+                @:events.push({
+                @:    title: '@projectTask.Title',
+                @:    start: '@projectTask.Date.ToString("yyyy-MM-dd")',
+                @:    url: '@Url.Action("ProjectDetails", "UserHome", new { projectId = projectTask.ProjectId })'
+                @:});
+            }
+        }
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: events,
-                eventClick: function (info) {
-                    window.location = info.event.url;
-                }
-            });
+        calendar.addEventSource(events); // Add new events to the calendar
 
-            calendar.render();
-        });
+        calendar.render();
     }
+
+    //calls the loadcalender function and sets event listener for the select so that calendar can be re loaded on change
+    function initializePage() {
+        const filter = document.getElementById('filter');
+        filter.addEventListener('change', function () {
+            const selectedFilter = filter.value;
+            loadCalendar(selectedFilter);
+        });
+
+        loadCalendar(filter.value); // Load calendar when the page loads
+    }
+
+    document.addEventListener('DOMContentLoaded', initializePage);
 </script>
-<script>
-    initializeCalendar();
-</script>
+<script>initializeCalendar();</script>
 
 
 
