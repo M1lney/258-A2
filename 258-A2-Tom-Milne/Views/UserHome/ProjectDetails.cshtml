@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="~/css/ProjectDetailsStyle.css" />
 </head>
 
-<h4>@Model.Project.Title</h4>
+<input class="form-control editable-field" id="projectTitle_@Model.Project.Id" readonly="readonly" value="@Model.Project.Title" />
 <p>@Model.Project.Description</p>
-<p>Finish Date: @Model.Project.Date.ToShortDateString()</p>
+<input type="date" class="form-control editable-field" id="projectDate_@Model.Project.Id" readonly="readonly" value="@Model.Project.Date.ToString("yyyy-MM-dd")" />
 
 <h5>Project Tasks</h5>
 <div>
@@ -23,16 +23,16 @@
             <div class="card-body">
                 <div class="row" style="border-bottom: 1px solid #ccc;">
                     <div class="col-md-6">
-                        <h5 class="card-title">@task.Title</h5>
+                        <input class="form-control editable-field" id="taskTitle_@task.Id" readonly="readonly" value="@task.Title" />
                     </div>
                     <div class="col-md-6">
-                        <p class="card-text"><strong>Due Date:</strong> @task.Date.ToString("MMM dd, yyyy")</p>
+                        <input type="date" class="form-control editable-field" id="taskDate_@task.Id" readonly="readonly" value="@task.Date.ToString("yyyy-MM-dd")" />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <h6>Description:</h6>
-                    <textarea readonly ="readonly" class="form-control" id="taskDescription_@task.Id">@task.Description</textarea>
-                    <button class="btn btn-primary" id="editTaskButton" task-id="@task.Id">Edit</button>
+                    <textarea class="form-control editable-field" id="taskDescription_@task.Id" readonly="readonly">@task.Description</textarea>
+                    <button class="btn btn-primary" id="editButton" task-id="@task.Id">Edit</button>
                 </div>
 
             </div>
@@ -54,23 +54,18 @@
     });</script>
 
 
-<script>
-    const editButtons = document.querySelectorAll('button[task-id]');
+<script>const editButton = document.getElementById('editButton');
+    const editFields = document.querySelectorAll('.editable-field');
 
-    editButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const taskId = button.getAttribute('task-id');
-            const description = document.getElementById(`taskDescription_${taskId}`);
-
-            if (description.readOnly) {
-                description.readOnly = false;
-                button.textContent = 'Save';
-            } else {
-                description.readOnly = true;
-                button.textContent = 'Edit';
-            }
+    function toggleEditableFields() {
+        editFields.forEach(field => {
+            field.readOnly = !field.readOnly;
         });
-    });
-</script>
 
+        editButton.textContent = editFields[0].readOnly ? 'Edit Fields' : 'Save Changes';
+    }
+
+    editButton.addEventListener('click', () => {
+        toggleEditableFields();
+    });</script>
 
