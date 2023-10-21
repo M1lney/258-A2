@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - _258_A2_Tom_Milne</title>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!--FullCalendar js used for the calendar-->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
@@ -16,7 +16,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="UserHome" asp-action="Index">Simple Project Planner</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -32,7 +32,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
                         </li>
                         <!--Nav link to the Identity framework page for account management. I made small modifications to the page
-                            by adding a link to the loggout action and removing some elements-->
+                        by adding a link to the loggout action and removing some elements-->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a>
                         </li>
@@ -41,8 +41,8 @@
                     <form asp-controller="UserHome" asp-action="Search" method="get" class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" name="searchTerm" class="form-control" placeholder="Search..." />
-                                <button type="submit" class="btn btn-primary">Search</button>
+                                <input type="text" name="searchTerm" class="form-control" id="search-bar" placeholder="Search..." />
+                                <button id="search-button" type="submit" class="btn">Search</button>
                                 <div class="input-group-addon" style="margin-left:5px">
                                     <select class="form-control" id="selectedFilter" name="selectedFilter">
                                         <option value="All">Filter by: All</option>
@@ -64,8 +64,9 @@
     </div>
 
     <footer class="border-top footer text-muted">
+
         <div class="container">
-            &copy; 2023 - _258_A2_Tom_Milne - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - _258_A2_Tom_Milne
         </div>
     </footer>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
