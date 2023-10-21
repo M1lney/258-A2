@@ -5,7 +5,7 @@
     Layout = "_LayoutUser";
 }
 
-<h1>Index</h1>
+<h1>Projects</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -22,9 +22,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -32,7 +30,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+            <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@item.Id">@item.Title</a></td>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -40,9 +38,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
