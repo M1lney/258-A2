@@ -10,24 +10,24 @@
 
 #search-bar {
     background-color: #f0f0f0;
-    padding: 5px 30px; /* Adjust the padding to control the height */
+    padding: 5px 30px; 
     border-radius: 5px;
 }
 
 #search-button {
     margin-top: 5px;
     margin-bottom: 5px;
-    padding: 5px 30px; /* Adjust the padding to control the width and height */
+    padding: 5px 30px; 
     border-radius: 5px;
     background-color: #ABD1DB;
-    text-align: center; /* Center the text horizontally */
+    text-align: center; 
     font-weight: lighter;
 }
 
 
 #selectedFilter {
     text-align: center;
-    padding: 5px 15px; /* Adjust the padding to control the height */
+    padding: 5px 15px; 
     font-weight: lighter;
 }
 
@@ -38,7 +38,7 @@ a {
 
 
     a:hover {
-        color: #3228EA; /* Change this to your desired hover color */
+        color: #3228EA; 
     }
 
 .userhome-container {

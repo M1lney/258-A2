@@ -9,6 +9,7 @@ using Data;
 using _258_A2_Tom_Milne.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
+using Microsoft.Build.Evaluation;
 
 namespace _258_A2_Tom_Milne.Controllers
 {
@@ -135,6 +136,7 @@ namespace _258_A2_Tom_Milne.Controllers
             {
                 return NotFound();
             }
+            var projectId = projectTask.ProjectId;
 
             if (ModelState.IsValid)
             {
@@ -154,7 +156,7 @@ namespace _258_A2_Tom_Milne.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ProjectDetails", "UserHome", new { projectId });
             }
             ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", projectTask.ProjectId);
             return View(projectTask);

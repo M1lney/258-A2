@@ -18,7 +18,7 @@
         <input class="form-control editable-field" id="projectTitle_@Model.Project.Id" readonly="readonly" value="@Model.Project.Title" />
 
         <label for="projectDescription_@Model.Project.Id">Project Description</label>
-        <input type="date" class="form-control editable-field" id="projectDescription_@Model.Project.Id" readonly="readonly" value="@Model.Project.Description" />
+        <input class="form-control editable-field" id="projectDescription_@Model.Project.Id" readonly="readonly" value="@Model.Project.Description" />
 
         <label for="projectDate_@Model.Project.Id">Finish Date:</label>
         <input type="date" class="form-control editable-field" id="projectDate_@Model.Project.Id" readonly="readonly" value="@Model.Project.Date.ToString("yyyy-MM-dd")" />
@@ -78,21 +78,5 @@
         form.style.display = "none";
     });</script>
 
-<!--This script gets the edit button from the document and all editable elements. Then allows the user to toggle if the
-    elements can be edited-->
-<script>const editButton = document.getElementById('editButton');
-    const editFields = document.querySelectorAll('.editable-field');
 
-    //toggles the readonly attribute
-    function toggleEditableFields() {
-        editFields.forEach(field => {
-            field.readOnly = !field.readOnly;
-        });
-        //toggles the the text content of the button and its function between setting the elements readonly and !readonly
-        editButton.textContent = editFields[0].readOnly ? 'Edit Fields' : 'Save Changes';
-    }
-
-    editButton.addEventListener('click', () => {
-        toggleEditableFields();
-    });</script>
 

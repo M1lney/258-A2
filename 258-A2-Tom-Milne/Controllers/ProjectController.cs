@@ -25,7 +25,7 @@ namespace _258_A2_Tom_Milne.Controllers
         }
 
         //Modified index action which passes list of projects to be displayed based on the logged in user
-        //Authorize annotation as only authenticated user can access projects
+        //Authorize annotation as only authenticated user can acc
         [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -129,7 +129,7 @@ namespace _258_A2_Tom_Milne.Controllers
             {
                 return NotFound();
             }
-
+            var projectId = id;
             if (ModelState.IsValid)
             {
                 try
@@ -148,7 +148,7 @@ namespace _258_A2_Tom_Milne.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ProjectDetails", "UserHome", new { projectId });
             }
             return View(project);
         }

@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<head>
+    <link rel="stylesheet" href="~/css/UserHomeStyle.css" />
+</head>
 <h1>Edit</h1>
 
 <h4>ProjectTask</h4>
@@ -30,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
+                <input asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId" readonly="readonly">
                 <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,7 +43,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <<a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@Model.ProjectId">Back to Project Details</a>
 </div>
 
 @section Scripts {

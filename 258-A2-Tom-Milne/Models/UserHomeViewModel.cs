@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using _258_A2_Tom_Milne.Models; // Import necessary namespaces for your entities
+using _258_A2_Tom_Milne.Models; 
 
 public class UserHomeViewModel
 {

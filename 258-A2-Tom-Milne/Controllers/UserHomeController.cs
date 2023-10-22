@@ -60,13 +60,21 @@ public class UserHomeController : Controller
         return View(viewModel);
     }
 
-    //Create a new SearchView model based on the searchTerm and SelectedFilter 
-    public IActionResult Search(string searchTerm, string selectedFilter)
+    //Create a new SearchView model based on the searchTerm and SelectedFilter
+    [Authorize]
+    public async Task<IActionResult> Search(string searchTerm, string selectedFilter)
     {
-        
+        // Get the current user
+        var user = await _userManager.GetUserAsync(User);
 
-        var matchingProjects = _a2DbContext.Project.Where(p => p.Title.Contains(searchTerm)).ToList();
-        var matchingTasks = _a2DbContext.ProjectTask.Where(pt => pt.Title.Contains(searchTerm)).ToList();
+        // Filter matching projects and tasks by UserId
+        var matchingProjects = _a2DbContext.Project
+            .Where(p => p.UserId == user.Id && p.Title.Contains(searchTerm))
+            .ToList();
+
+        var matchingTasks = _a2DbContext.ProjectTask
+            .Where(pt => pt.Project.UserId == user.Id && pt.Title.Contains(searchTerm))
+            .ToList();
 
         // Create a view model to display the search results
         var viewModel = new SearchViewModel
@@ -79,9 +87,6 @@ public class UserHomeController : Controller
 
         return View("SearchResult", viewModel);
     }
-
-  
-
 
 }
 
