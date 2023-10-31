@@ -29,7 +29,11 @@ public class UserHomeController : Controller
 
         // Fetch user-specific data related to projects and ProjectTasks based on the id of logged in user, use linq to order by date 
         var userProjects = _a2DbContext.Project.Where(p => p.UserId == user.Id).OrderBy(p => p.Date).ToList();
-        var userProjectTasks = _a2DbContext.ProjectTask.Where(pt => pt.UserId == user.Id).OrderBy(pt => pt.Date).ToList();
+
+        var userProjectTasks = userProjects
+        .SelectMany(project => _a2DbContext.ProjectTask.Where(pt => pt.ProjectId == project.Id))
+        .OrderBy(pt => pt.Date)
+        .ToList();
 
         // Create a ViewModel to pass data to the view
         var viewModel = new UserHomeViewModel
