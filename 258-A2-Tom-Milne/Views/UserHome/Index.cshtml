@@ -27,7 +27,7 @@
                             this directs to the ProjectDetails view for that project-->
                         <td><a asp-action="ProjectDetails" asp-controller="UserHome" asp-route-projectId="@project.Id">@project.Title</a></td>
 
-                        <td>@project.Date</td>
+                        <td>@project.DateEnd</td>
                         <td><a asp-action="Delete" asp-controller="Project" asp-route-id="@project.Id">Delete</a></td>
                     </tr>
                 }
@@ -54,18 +54,18 @@
 
     //function to load the calendar
     function loadCalendar(selectedFilter) {
-        
+
         var calendarEl = document.getElementById('calendar'); //get the div where the calendar will display
         var calendar = new FullCalendar.Calendar(calendarEl, { //initialize using the Calendar method from FullCalendar, passing the div
             initialView: 'dayGridMonth', //set view to display single month
-            eventClick: function (info) { //set event for clicking some object within the calender 
+            eventClick: function (info) { //set event for clicking some object within the calender
                 window.location = info.event.url;
             }
         });
 
         calendar.removeAllEvents(); // Clear existing events so that we can re load calender when select is toggled
 
-        var events = []; //initialise array of calendar events 
+        var events = []; //initialise array of calendar events
 
         //loops through a model based on the condition of the select value. Uses razor syntax to generate event objects and add them to array
         if (selectedFilter == 'Projects') {
@@ -73,7 +73,8 @@
             {
                 @:events.push({
                 @:    title: '@project.Title',
-                @:    start: '@project.Date.ToString("yyyy-MM-dd")',
+                @:    start: '@project.DateStart.ToString("yyyy-MM-dd")',
+                @:    end: '@project.DateEnd.ToString("yyyy-MM-dd")',
                 @:    url: '@Url.Action("ProjectDetails", "UserHome", new { projectId = @project.Id })'
                 @:});
             }

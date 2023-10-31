@@ -28,7 +28,7 @@ public class UserHomeController : Controller
         var user = await _userManager.GetUserAsync(User);
 
         // Fetch user-specific data related to projects and ProjectTasks based on the id of logged in user, use linq to order by date 
-        var userProjects = _a2DbContext.Project.Where(p => p.UserId == user.Id).OrderBy(p => p.Date).ToList();
+        var userProjects = _a2DbContext.Project.Where(p => p.UserId == user.Id).OrderBy(p => p.DateEnd).ToList();
 
         var userProjectTasks = userProjects
         .SelectMany(project => _a2DbContext.ProjectTask.Where(pt => pt.ProjectId == project.Id))

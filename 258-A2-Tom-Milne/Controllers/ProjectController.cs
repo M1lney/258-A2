@@ -73,7 +73,7 @@ namespace _258_A2_Tom_Milne.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Date,UserId")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,DateStart,DateEnd,UserId")] Project project)
         {
             if (ModelState.IsValid)
             {

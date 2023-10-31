@@ -21,7 +21,7 @@
         <input class="form-control editable-field" id="projectDescription_@Model.Project.Id" readonly="readonly" value="@Model.Project.Description" />
 
         <label for="projectDate_@Model.Project.Id">Finish Date:</label>
-        <input type="date" class="form-control editable-field" id="projectDate_@Model.Project.Id" readonly="readonly" value="@Model.Project.Date.ToString("yyyy-MM-dd")" />
+        <input type="date" class="form-control editable-field" id="projectDate_@Model.Project.Id" readonly="readonly" value="@Model.Project.DateEnd.ToString("yyyy-MM-dd")" />
         <a asp-action="Edit" asp-controller="Project" asp-route-id="@Model.Project.Id">Edit</a><button id="toggleForm" class="btn btn-primary">Add Project Task</button>
 
         <!--Use razor syntax to return and display a partial view responsible for creating new tasks and adding them within the projects.
